@@ -20,6 +20,7 @@ public class LatinDictionary implements DictionaryService {
 
     @Override
     public void remove(String key) {
+        data.remove(key);
     }
 }
 
