@@ -15,7 +15,7 @@ public class LatinDictionary implements DictionaryService {
 
     @Override
     public String find(String key) {
-        return "";
+        return data.get(key);
     }
 
     @Override
