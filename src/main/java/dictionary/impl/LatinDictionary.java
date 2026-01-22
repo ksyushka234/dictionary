@@ -10,7 +10,7 @@ public class LatinDictionary implements DictionaryService {
     Map<String, String> data = new HashMap<>();
     @Override
     public void add(String key, String value) {
-
+        data.put(key, value);
     }
 
     @Override
