@@ -11,7 +11,17 @@ public class LatinDictionary implements DictionaryService {
     @Override
     public void add(String key, String value) {
         if (key.length()==4){
-            data.put(key, value);
+            boolean valid = true;
+            for (int i = 0;i< key.length();i++){
+                char c = key.charAt(i);
+                if (!Character.isLetter(c)) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                data.put(key, value);
+            }
         }
     }
 
