@@ -8,7 +8,19 @@ public class DigitDictionary implements DictionaryService {
     Map<String, String> data = new HashMap<>();
     @Override
     public void add(String key, String value) {
-        data.put(key, value);
+        if (key.length()==4){
+            boolean valid = true;
+            for (int i = 0;i< key.length();i++){
+                char c = key.charAt(i);
+                if (!Character.isDigit(c)) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                data.put(key, value);
+            }
+        }
     }
 
     @Override
