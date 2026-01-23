@@ -14,7 +14,9 @@ public class LatinDictionary implements DictionaryService {
             boolean valid = true;
             for (int i = 0;i< key.length();i++){
                 char c = key.charAt(i);
-                if (!Character.isLetter(c)) {
+                boolean isLower = c >= 'a' && c <= 'z';
+                boolean isUpper = c >= 'A' && c <= 'Z';
+                if (!isLower && !isUpper) {
                     valid = false;
                     break;
                 }
