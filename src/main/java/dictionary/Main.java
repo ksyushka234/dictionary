@@ -20,11 +20,15 @@ public class Main {
         System.out.println("Выберите словарь: 1 - Latin, 2 - Digit");
         int choice = scanner.nextInt();
         DictionaryService active;
+        String activeFileName;
         if (choice == 1) {
             active = latin;
+            activeFileName = "latin.txt";
         } else if (choice == 2) {
             active = digit;
-        } else {
+            activeFileName="digit.txt";
+        }
+        else {
             System.out.println("Ошибка: неверный выбор");
             return;
         }
@@ -61,12 +65,14 @@ public class Main {
                 String translation = scanner.nextLine();
 
                 active.add(key, translation);
+                DictionaryFileLoader.saveToFile(active, activeFileName);
                 System.out.println("Проверка: " + active.find(key));
                 System.out.println("Добавлено");
             } else if (cmd == 4){
                 System.out.println("Введите ключ: ");
                 String key = scanner.next();
                 active.remove(key);
+                DictionaryFileLoader.saveToFile(active, activeFileName);
                 System.out.println("Удалено");
             }
             else if (cmd == 5){
