@@ -36,6 +36,7 @@ public class Main {
             System.out.println("2 - Найти по ключу");
             System.out.println("3 - Добавить запись");
             System.out.println("4 - Удалить по ключу");
+            System.out.println("5 - Показать оба словаря");
             System.out.println("0 - Выход");
             int cmd = scanner.nextInt();
             if (cmd == 1) {
@@ -68,6 +69,13 @@ public class Main {
                 active.remove(key);
                 System.out.println("Удалено");
             }
+            else if (cmd == 5){
+                System.out.println("LATIN DICTIONARY:");
+                System.out.println(latin.getAll());
+                System.out.println("DIGIT DICTIONARY:");
+                System.out.println(digit.getAll());
+            }
+
             else if (cmd == 0) {
                 break;
             } else {
