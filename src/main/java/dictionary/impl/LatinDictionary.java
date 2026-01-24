@@ -36,6 +36,11 @@ public class LatinDictionary implements DictionaryService {
     public void remove(String key) {
         data.remove(key);
     }
+
+    @Override
+    public Map<String, String> getAll(){
+        return data;
+    }
 }
 
 
