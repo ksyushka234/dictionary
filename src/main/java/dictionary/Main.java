@@ -4,7 +4,7 @@ import dictionary.impl.DigitDictionary;
 import dictionary.impl.LatinDictionary;
 import dictionary.io.DictionaryFileLoader;
 import dictionary.service.DictionaryService;
-import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,5 +16,63 @@ public class Main {
         System.out.println(latin.getAll());
         System.out.println("DIGIT DICTIONARY:");
         System.out.println(digit.getAll());
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Выберите словарь: 1 - Latin, 2 - Digit");
+        int choice = scanner.nextInt();
+        DictionaryService active;
+        if (choice == 1) {
+            active = latin;
+        } else if (choice == 2) {
+            active = digit;
+        } else {
+            System.out.println("Ошибка: неверный выбор");
+            return;
+        }
+        System.out.println("Активный словарь: " + (choice == 1 ? "Latin" : "Digit"));
+        System.out.println("Вы выбрали: " + choice);
+        while (true) {
+            System.out.println("Команды:");
+            System.out.println("1 - Показать выбранный словарь");
+            System.out.println("2 - Найти по ключу");
+            System.out.println("3 - Добавить запись");
+            System.out.println("4 - Удалить по ключу");
+            System.out.println("0 - Выход");
+            int cmd = scanner.nextInt();
+            if (cmd == 1) {
+                System.out.println(active.getAll());
+            } else if (cmd == 2) {
+                System.out.println("Введите ключ:");
+                String key = scanner.next();
+                String value = active.find(key);
+
+                if (value == null) {
+                    System.out.println("Не найдено");
+                } else {
+                    System.out.println(value);
+                }
+            } else if (cmd == 3) {
+                System.out.println("Введите ключ:");
+                String key = scanner.next();
+
+                scanner.nextLine();
+
+                System.out.println("Введите перевод: ");
+                String translation = scanner.nextLine();
+
+                active.add(key, translation);
+                System.out.println("Проверка: " + active.find(key));
+                System.out.println("Добавлено");
+            } else if (cmd == 4){
+                System.out.println("Введите ключ: ");
+                String key = scanner.next();
+                active.remove(key);
+                System.out.println("Удалено");
+            }
+            else if (cmd == 0) {
+                break;
+            } else {
+                System.out.println("Неизвестная команда");
+            }
+        }
     }
 }
