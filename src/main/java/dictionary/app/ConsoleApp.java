@@ -1,7 +1,6 @@
 package dictionary.app;
 
-import dictionary.impl.DigitDictionary;
-import dictionary.impl.LatinDictionary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import dictionary.io.DictionaryFileLoader;
 import dictionary.service.DictionaryService;
 import org.springframework.stereotype.Component;
@@ -11,11 +10,21 @@ import java.util.Scanner;
 
 @Component
 public class ConsoleApp {
-    public void run(){
-        DictionaryService latin = new LatinDictionary();
-        DictionaryService digit = new DigitDictionary();
-        DictionaryFileLoader.loadFromFile(latin, "latin.txt");
-        DictionaryFileLoader.loadFromFile(digit, "digit.txt");
+    private final DictionaryFileLoader fileLoader;
+    private final DictionaryService latin;
+    private final DictionaryService digit;
+
+    public ConsoleApp(@Qualifier("latinDictionary") DictionaryService latin,
+                      @Qualifier("digitDictionary") DictionaryService digit,
+                      DictionaryFileLoader fileLoader) {
+        this.latin = latin;
+        this.digit = digit;
+        this.fileLoader = fileLoader;
+    }
+
+    public void run() {
+        fileLoader.loadFromFile(latin, "latin.txt");
+        fileLoader.loadFromFile(digit, "digit.txt");
         System.out.println("LATIN DICTIONARY:");
         System.out.println(latin.getAll());
         System.out.println("DIGIT DICTIONARY:");
@@ -30,9 +39,8 @@ public class ConsoleApp {
             activeFileName = "latin.txt";
         } else if (choice == 2) {
             active = digit;
-            activeFileName="digit.txt";
-        }
-        else {
+            activeFileName = "digit.txt";
+        } else {
             System.out.println("Ошибка: неверный выбор");
             return;
         }
@@ -69,24 +77,21 @@ public class ConsoleApp {
                 String translation = scanner.nextLine();
 
                 active.add(key, translation);
-                DictionaryFileLoader.saveToFile(active, activeFileName);
+                fileLoader.saveToFile(active, activeFileName);
                 System.out.println("Проверка: " + active.find(key));
                 System.out.println("Добавлено");
-            } else if (cmd == 4){
+            } else if (cmd == 4) {
                 System.out.println("Введите ключ: ");
                 String key = scanner.next();
                 active.remove(key);
-                DictionaryFileLoader.saveToFile(active, activeFileName);
+                fileLoader.saveToFile(active, activeFileName);
                 System.out.println("Удалено");
-            }
-            else if (cmd == 5){
+            } else if (cmd == 5) {
                 System.out.println("LATIN DICTIONARY:");
                 System.out.println(latin.getAll());
                 System.out.println("DIGIT DICTIONARY:");
                 System.out.println(digit.getAll());
-            }
-
-            else if (cmd == 0) {
+            } else if (cmd == 0) {
                 break;
             } else {
                 System.out.println("Неизвестная команда");
