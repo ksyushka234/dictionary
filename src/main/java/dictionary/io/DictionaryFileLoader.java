@@ -1,7 +1,7 @@
 package dictionary.io;
 
 import dictionary.service.DictionaryService;
-
+import org.springframework.stereotype.Component;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class DictionaryFileLoader {
-    public static void loadFromFile(DictionaryService dictionary, String fileName) {
+    public void loadFromFile(DictionaryService dictionary, String fileName) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(fileName));
             for (String line : lines) {
@@ -27,7 +28,7 @@ public class DictionaryFileLoader {
         }
     }
 
-    public static void saveToFile(DictionaryService dictionary, String fileName) {
+    public void saveToFile(DictionaryService dictionary, String fileName) {
         Map<String, String> data = dictionary.getAll();
         List<String> lines = new ArrayList<>();
         for (Map.Entry<String, String> entry : data.entrySet()) {

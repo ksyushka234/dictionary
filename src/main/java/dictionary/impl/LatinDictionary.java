@@ -1,11 +1,14 @@
 package dictionary.impl;
 
+import org.springframework.stereotype.Component;
+
 import dictionary.service.DictionaryService;
 
 import java.util.Map;
 
 import java.util.HashMap;
 
+@Component("latinDictionary")
 public class LatinDictionary implements DictionaryService {
     Map<String, String> data = new HashMap<>();
     @Override

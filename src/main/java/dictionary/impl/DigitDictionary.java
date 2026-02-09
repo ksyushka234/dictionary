@@ -1,9 +1,13 @@
 package dictionary.impl;
 import dictionary.service.DictionaryService;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 
 import java.util.HashMap;
+
+@Component("digitDictionary")
 public class DigitDictionary implements DictionaryService {
     Map<String, String> data = new HashMap<>();
     @Override
