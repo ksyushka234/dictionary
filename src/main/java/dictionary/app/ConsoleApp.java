@@ -77,9 +77,15 @@ public class ConsoleApp {
                 String translation = scanner.nextLine();
 
                 active.add(key, translation);
-                fileLoader.saveToFile(active, activeFileName);
-                System.out.println("Проверка: " + active.find(key));
-                System.out.println("Добавлено");
+                String added = active.find(key);
+                 if (added==null){
+                    System.out.println("Неверный ключ для этого словаря");
+                }
+                else{
+                    fileLoader.saveToFile(active, activeFileName);
+                    System.out.println("Проверка: " + active.find(key));
+                    System.out.println("Добавлено");
+                }
             } else if (cmd == 4) {
                 System.out.println("Введите ключ: ");
                 String key = scanner.next();
