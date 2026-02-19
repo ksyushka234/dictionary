@@ -2,30 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dictionaries</title>
+    <title>Словари</title>
 </head>
 <body>
-<ul>
-    <li th:each="d : ${dictionaries}" th:text="${d.type}">TYPE</li>
-</ul>
-<h1>Dictionaries</h1>
+<h1>Словари</h1>
 
-<details>
-    <summary>Latin dictionary</summary>
-    <div>
-        <p>Здесь будут записи латинского словаря</p>
+<details open>
+    <summary>Латинский словарь</summary>
+
+    <div th:if="${latinDictionary == null}">
+        Latin dictionary not found
+    </div>
+
+    <div th:if="${latinDictionary != null}">
+        <div th:each="e : ${latinDictionary.entries}">
+            <b th:text="${e.entryKey}">key</b>
+            <ul>
+                <li th:each="v : ${e.values}" th:text="${v.value}">value</li>
+            </ul>
+        </div>
     </div>
 </details>
 
 <details>
-    <summary>Digit dictionary</summary>
-    <div>
-        <p>Здесь будут записи цифрового словаря</p>
+    <summary>Цифровой словарь</summary>
+
+    <div th:if="${digitDictionary == null}">
+        Digit dictionary not found
+    </div>
+
+    <div th:if="${digitDictionary != null}">
+        <div th:each="e : ${digitDictionary.entries}">
+            <b th:text="${e.entryKey}">key</b>
+            <ul>
+                <li th:each="v : ${e.values}" th:text="${v.value}">value</li>
+            </ul>
+        </div>
     </div>
 </details>
-<h2>Entries</h2>
-<ul>
-    <li th:each="e : ${entries}" th:text="${e.entryKey}">KEY</li>
-</ul>
+
 </body>
 </html>
