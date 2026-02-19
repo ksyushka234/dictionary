@@ -17,6 +17,9 @@
     <div th:if="${latinDictionary != null}">
         <div th:each="e : ${latinDictionary.entries}">
             <b th:text="${e.entryKey}">key</b>
+            <button type="button" th:attr="data-id=${e.id}" onclick="deleteEntry(this)">
+                Delete
+            </button>
             <ul>
                 <li th:each="v : ${e.values}" th:text="${v.value}">value</li>
             </ul>
@@ -34,12 +37,26 @@
     <div th:if="${digitDictionary != null}">
         <div th:each="e : ${digitDictionary.entries}">
             <b th:text="${e.entryKey}">key</b>
+            <button type="button" th:attr="data-id=${e.id}" onclick="deleteEntry(this)">
+                Delete
+            </button>
             <ul>
                 <li th:each="v : ${e.values}" th:text="${v.value}">value</li>
             </ul>
         </div>
     </div>
 </details>
-
+<script>
+    async function deleteEntry(btn) {
+        const id = btn.getAttribute("data-id");
+        const resp = await fetch("/entries/" + id, { method: "DELETE" });
+        if (resp.ok) {
+            // удаляем блок записи со страницы
+            btn.closest("div").remove();
+        } else {
+            alert("Delete failed");
+        }
+    }
+</script>
 </body>
 </html>
