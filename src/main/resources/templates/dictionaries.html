@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Dictionaries</title>
 </head>
 <body>
+<ul>
+    <li th:each="d : ${dictionaries}" th:text="${d.type}">TYPE</li>
+</ul>
 <h1>Dictionaries</h1>
 
 <details>
@@ -20,6 +23,9 @@
         <p>Здесь будут записи цифрового словаря</p>
     </div>
 </details>
-
+<h2>Entries</h2>
+<ul>
+    <li th:each="e : ${entries}" th:text="${e.entryKey}">KEY</li>
+</ul>
 </body>
 </html>
