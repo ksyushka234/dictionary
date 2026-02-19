@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add/Edit Entry</title>
+</head>
+<body>
+
+<h1>Добавить/редактировать</h1>
+
+<form method="post" action="/entries">
+    <label>Dictionary:</label>
+    <select name="type">
+        <option value="LATIN">LATIN</option>
+        <option value="DIGIT">DIGIT</option>
+    </select>
+
+    <br><br>
+
+    <label>Key:</label>
+    <input type="text" name="key"/>
+
+    <br><br>
+
+    <label>Values:</label>
+    <div id="values">
+        <input type="text" name="values"/>
+    </div>
+    <button type="button" onclick="addValue()">+ value</button>
+
+    <br><br>
+
+    <button type="submit">Save</button>
+</form>
+
+<script>
+    function addValue() {
+        const div = document.getElementById("values");
+        const input = document.createElement("input");
+        input.type = "text";
+        input.name = "values";
+        div.appendChild(document.createElement("br"));
+        div.appendChild(input);
+    }
+</script>
+
+</body>
+</html>
