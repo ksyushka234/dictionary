@@ -22,6 +22,7 @@
             <button type="button" th:attr="data-id=${e.id}" onclick="deleteEntry(this)">
                 Delete
             </button>
+            <a th:href="@{/entries/{id}/edit(id=${e.id})}">Edit</a>
             <ul>
                 <li th:each="v : ${e.values}" th:text="${v.value}">value</li>
             </ul>
@@ -42,6 +43,7 @@
             <button type="button" th:attr="data-id=${e.id}" onclick="deleteEntry(this)">
                 Delete
             </button>
+            <a th:href="@{/entries/{id}/edit(id=${e.id})}">Edit</a>
             <ul>
                 <li th:each="v : ${e.values}" th:text="${v.value}">value</li>
             </ul>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit entry</title>
+</head>
+<body>
+
+<h1>Edit entry</h1>
+
+<div th:if="${entry == null}">
+    Not found
+</div>
+
+<div th:if="${entry != null}">
+    <p>
+        Dictionary: <b th:text="${entry.dictionary.type}">TYPE</b>
+    </p>
+    <p>
+        Key: <b th:text="${entry.entryKey}">KEY</b>
+    </p>
+
+    <h2>Values</h2>
+    <ul>
+        <li th:each="v : ${entry.values}">
+            <span th:text="${v.value}">VAL</span>
+
+            <form method="post" th:action="@{/values/{id}/delete(id=${v.id})}" style="display:inline;">
+                <input type="hidden" name="entryId" th:value="${entry.id}">
+                <button type="submit">Delete value</button>
+            </form>
+        </li>
+    </ul>
+
+    <h3>Add value</h3>
+    <form method="post" th:action="@{/entries/{id}/values(id=${entry.id})}">
+        <input type="text" name="value">
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<p><a href="/dictionaries">Back</a></p>
+
+</body>
+</html>
