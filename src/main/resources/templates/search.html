@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+
+<h1>Search</h1>
+
+<form method="get" action="/search">
+    <input type="text" name="q" th:value="${q}" placeholder="search..."/>
+
+    <select name="scope">
+        <option value="ALL" th:selected="${scope == 'ALL'}">ALL</option>
+        <option value="LATIN" th:selected="${scope == 'LATIN'}">LATIN</option>
+        <option value="DIGIT" th:selected="${scope == 'DIGIT'}">DIGIT</option>
+    </select>
+
+    <select name="by">
+        <option value="KEY" th:selected="${by == 'KEY'}">KEY</option>
+        <option value="VALUE" th:selected="${by == 'VALUE'}">VALUE</option>
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<hr>
+
+<div th:if="${result != null}">
+    <h2>Result</h2>
+    <ul>
+        <li th:each="e : ${result}">
+            <span th:text="${e.dictionary.type}">TYPE</span>
+            :
+            <b th:text="${e.entryKey}">key</b>
+        </li>
+    </ul>
+</div>
+
+<p><a href="/dictionaries">Back to dictionaries</a></p>
+
+</body>
+</html>
