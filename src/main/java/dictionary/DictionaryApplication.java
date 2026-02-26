@@ -17,24 +17,27 @@ public class DictionaryApplication {
         SpringApplication.run(DictionaryApplication.class, args);
     }
     @Bean
-    public CommandLineRunner demoRunner(DictionaryRepository dictionaryRepository, EntryRepository entryRepository, EntryValueRepository entryValueRepository) {
+    public CommandLineRunner demoRunner(DictionaryRepository dictionaryRepository,
+                                        EntryRepository entryRepository,
+                                        EntryValueRepository entryValueRepository) {
         return args -> {
-            if (dictionaryRepository.count() > 0) {
-                return;
+            DictionaryEntity latin = dictionaryRepository.findByType(DictionaryType.LATIN);
+            if (latin == null) {
+                latin = dictionaryRepository.save(new DictionaryEntity(DictionaryType.LATIN));
             }
-            DictionaryEntity latin = new DictionaryEntity(DictionaryType.LATIN);
-            DictionaryEntity digit = new DictionaryEntity(DictionaryType.DIGIT);
-            dictionaryRepository.save(latin);
-            dictionaryRepository.save(digit);
-            System.out.println("Entry and values saved");
-            EntryEntity entry = new EntryEntity(latin, "word");
-            entryRepository.save(entry);
 
-            entryValueRepository.save(new EntryValueEntity(entry, "слово"));
-            entryValueRepository.save(new EntryValueEntity(entry, "термин"));
-            System.out.println("Dictionaries saved");
-            System.out.println("DB init runner started");
+            DictionaryEntity digit = dictionaryRepository.findByType(DictionaryType.DIGIT);
+            if (digit == null) {
+                digit = dictionaryRepository.save(new DictionaryEntity(DictionaryType.DIGIT));
+            }
+
+            if (entryRepository.findByDictionaryAndEntryKey(latin, "word").isEmpty()) {
+                EntryEntity entry = entryRepository.save(new EntryEntity(latin, "word"));
+                entryValueRepository.save(new EntryValueEntity(entry, "слово"));
+                entryValueRepository.save(new EntryValueEntity(entry, "термин"));
+            }
+
+            System.out.println("DB init done");
         };
-
     }
 }
